@@ -1,0 +1,27 @@
+<launch>
+  <arg name="sim" default="false" />
+  <arg name="limited" default="false"/>
+  <arg name="debug" default="false" />
+    
+  <!-- Remap follow_joint_trajectory -->
+  <remap if="$(arg sim)" from="/follow_joint_trajectory" to="/arm_controller/follow_joint_trajectory"/>
+  
+	<!-- Launch planning_context without loading description again -->
+	<include file="$(find ur10_moveit_config)/launch/planning_context.launch">
+		<arg name="load_robot_description" value="false" />
+	</include>
+
+  <!-- Launch moveit -->
+  <include file="$(find ur10_moveit_config)/launch/move_group.launch">
+		<arg name="publish_monitored_planning_scene" value="true" />
+    <arg name="limited" default="$(arg limited)"/>
+    <arg name="debug" default="$(arg debug)" />
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find ur10_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+</launch>

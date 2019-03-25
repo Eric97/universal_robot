@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+  <remap from="/arm_controller/follow_joint_trajectory" to="/follow_joint_trajectory" />
+
   <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />
   <arg name="paused" default="false" doc="Starts gazebo in paused mode" />
   <arg name="gui" default="true" doc="Starts gazebo gui" />
